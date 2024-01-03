@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ApiService {
 
-  public endPoint: string = 'http://localhost:8000/api/v1/url/';
+  public url: string = 'http://localhost:8000/api/v1/';
 
   constructor() { }
   

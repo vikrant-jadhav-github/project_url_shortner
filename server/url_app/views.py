@@ -7,8 +7,10 @@ from .models import UrlModel
 from rest_framework import status
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 class UrlShortnerView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, pk):
 
         urlData = get_object_or_404(UrlModel, uuid=pk)
@@ -27,6 +29,7 @@ class UrlShortnerView(APIView):
     
     def post(self, request):
         
+        user = request.user
         userData = request.data
 
         url = userData.get('url')
@@ -34,7 +37,8 @@ class UrlShortnerView(APIView):
 
         data = {
             'url': url,
-            'uuid': genUuid
+            'uuid': genUuid,
+            'visitors': user.id,
         }
 
         urlModelSerializer = UrlModelSerializer(data=data)
@@ -42,6 +46,6 @@ class UrlShortnerView(APIView):
         if urlModelSerializer.is_valid():
             urlModelSerializer.save()
             newUrl = 'https://localhost:8000/' + genUuid
-            return Response({'message': 'URL Shortened Successfully', 'url': newUrl, 'status': status.HTTP_201_CREATED})
+            return Response({'message': 'URL Shortened Successfully', 'url': newUrl}, status=status.HTTP_201_CREATED)
         
-        return Response({'message': urlModelSerializer.errors, 'status': status.HTTP_400_BAD_REQUEST})
+        return Response({'message': urlModelSerializer.errors}, status=status.HTTP_400_BAD_REQUEST)

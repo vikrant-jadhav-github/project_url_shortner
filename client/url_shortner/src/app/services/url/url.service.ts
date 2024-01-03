@@ -12,12 +12,13 @@ export class UrlService {
   private shortenedUrlSubject = new BehaviorSubject<string>('');
   public shortenedUrl = this.shortenedUrlSubject.asObservable();
 
+  public endPoint = this.apiService.url + 'url/';
 
   constructor(private httpClient: HttpClient, private apiService: ApiService, private toastr: ToastrService) { }
 
   public getShortenedUrl(url: string) {
 
-    this.httpClient.post(this.apiService.endPoint, { url: url }).subscribe(
+    this.httpClient.post(this.endPoint, { url: url }).subscribe(
       (response: any) => {
         if(response.status === 201)
         {
