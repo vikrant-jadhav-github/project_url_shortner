@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShortMe</title>
+</head>
+<body>
+  
+  <section class="app">
+  
+    <div class="heading">
+      <h1>SHORT🔗ME</h1>
+    </div>
+  
+    <div class="description">
+      <p>SHORT_ME is a free tool to shorten URLs</p>
+      <p>Use our URL Shortner to create a rememberable and easy-to-share URL</p>
+    </div>
+  
+    <div class="shortenlink">
+      <input type="text" placeholder="Enter URL Here" [(ngModel)]="enteredUrl">
+      <button (click)="shortUrl(enteredUrl)">Shorten</button>
+    </div>
+
+    <div *ngIf="shortenedUrl" class="newlink">
+      <h3>Your Shortened Link</h3>
+
+      <div class="copylink">
+        <a [href]="shortenedUrl" target="_blank">{{shortenedUrl}}</a>
+        <p (click)="copyUrl()">📋</p>
+      </div>
+
+    </div>
+  
+  </section>
+  
+</body>
+</html>
